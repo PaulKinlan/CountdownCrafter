@@ -7,3 +7,5 @@ class Timer(db.Model):
     event_name = db.Column(db.String(200), nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    theme = db.Column(db.String(50), default='default')
+    layout = db.Column(db.String(50), default='standard')

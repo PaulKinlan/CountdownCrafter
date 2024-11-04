@@ -9,3 +9,75 @@
         font-size: 2rem;
     }
 }
+
+/* Timer Themes */
+.timer-container {
+    padding: 2rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+/* Default Theme */
+.default {
+    background: var(--bs-dark);
+}
+
+/* Neon Theme */
+.neon {
+    background: var(--bs-dark);
+    box-shadow: 0 0 20px var(--bs-info);
+}
+
+.neon .display-4 {
+    color: var(--bs-info);
+    text-shadow: 0 0 10px var(--bs-info);
+}
+
+/* Minimal Theme */
+.minimal {
+    background: none;
+}
+
+.minimal .display-4 {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: normal;
+}
+
+/* Retro Theme */
+.retro {
+    background: var(--bs-dark);
+    border: 2px solid var(--bs-warning);
+}
+
+.retro .display-4 {
+    font-family: "Courier New", Courier, monospace;
+    color: var(--bs-warning);
+}
+
+/* Layout Variations */
+.standard {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.compact {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.expanded {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem;
+}
+
+.expanded .display-4 {
+    font-size: 4rem;
+}
+
+@media (max-width: 768px) {
+    .expanded .display-4 {
+        font-size: 2.5rem;
+    }
+}

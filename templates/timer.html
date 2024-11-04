@@ -9,15 +9,17 @@
 {% block content %}
 <div class="row justify-content-center text-center">
     <div class="col-md-8">
-        <h1 class="mb-4">{{ timer.event_name }}</h1>
-        <div class="display-4 mb-4" id="countdown"></div>
-        <div class="mb-4">
-            <button class="btn btn-secondary" onclick="copyToClipboard()">
-                Share Timer
-            </button>
-            <button class="btn btn-secondary ms-2" id="installBtn" style="display: none;">
-                Add to Home Screen
-            </button>
+        <div class="timer-container {{ timer.theme }} {{ timer.layout }}">
+            <h1 class="mb-4">{{ timer.event_name }}</h1>
+            <div class="display-4 mb-4" id="countdown"></div>
+            <div class="mb-4">
+                <button class="btn btn-secondary" onclick="copyToClipboard()">
+                    Share Timer
+                </button>
+                <button class="btn btn-secondary ms-2" id="installBtn" style="display: none;">
+                    Add to Home Screen
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -27,6 +29,6 @@
 <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
 <script src="{{ url_for('static', filename='js/manifest.js') }}"></script>
 <script>
-    initTimer("{{ timer.id }}");
+    initTimer("{{ timer.id }}", "{{ timer.theme }}");
 </script>
 {% endblock %}

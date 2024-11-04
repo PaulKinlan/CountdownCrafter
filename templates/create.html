@@ -15,6 +15,23 @@
                 <label for="end_date" class="form-label">End Date and Time</label>
                 <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
             </div>
+            <div class="mb-3">
+                <label for="theme" class="form-label">Theme</label>
+                <select class="form-select" id="theme" name="theme">
+                    <option value="default">Default</option>
+                    <option value="neon">Neon</option>
+                    <option value="minimal">Minimal</option>
+                    <option value="retro">Retro</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="layout" class="form-label">Layout</label>
+                <select class="form-select" id="layout" name="layout">
+                    <option value="standard">Standard</option>
+                    <option value="compact">Compact</option>
+                    <option value="expanded">Expanded</option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Create Timer</button>
         </form>
     </div>

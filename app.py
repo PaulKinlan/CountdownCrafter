@@ -31,8 +31,15 @@ def create():
 def create_timer():
     event_name = request.form['event_name']
     end_date = datetime.fromisoformat(request.form['end_date'].replace('Z', '+00:00'))
+    theme = request.form.get('theme', 'default')
+    layout = request.form.get('layout', 'standard')
     
-    timer = models.Timer(event_name=event_name, end_date=end_date)
+    timer = models.Timer(
+        event_name=event_name,
+        end_date=end_date,
+        theme=theme,
+        layout=layout
+    )
     db.session.add(timer)
     db.session.commit()
     
@@ -66,5 +73,7 @@ def get_timer_data(timer_id):
     timer = models.Timer.query.get_or_404(timer_id)
     return {
         'event_name': timer.event_name,
-        'end_date': timer.end_date.isoformat()
+        'end_date': timer.end_date.isoformat(),
+        'theme': timer.theme,
+        'layout': timer.layout
     }
