@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from datetime import datetime
@@ -21,7 +21,6 @@ db.init_app(app)
 
 with app.app_context():
     import models
-    # Drop all tables and recreate them
     db.drop_all()
     db.create_all()
 
@@ -45,12 +44,51 @@ def create_timer():
     db.session.add(timer)
     db.session.commit()
     
-    return redirect(url_for('view_timer', timer_id=timer.id))
+    return redirect(url_for('view_timer', timer_id=timer.id, token=timer.edit_token))
 
 @app.route('/timer/<timer_id>')
 def view_timer(timer_id):
     timer = models.Timer.query.get_or_404(timer_id)
-    return render_template('timer.html', timer=timer)
+    token = request.args.get('token')
+    return render_template('timer.html', timer=timer, token=token if token == timer.edit_token else None)
+
+@app.route('/timer/<timer_id>/edit')
+def edit_timer_form(timer_id):
+    timer = models.Timer.query.get_or_404(timer_id)
+    token = request.args.get('token')
+    
+    if token != timer.edit_token:
+        abort(403)
+    
+    return render_template('edit.html', timer=timer, token=token)
+
+@app.route('/timer/<timer_id>/edit', methods=['POST'])
+def edit_timer(timer_id):
+    timer = models.Timer.query.get_or_404(timer_id)
+    token = request.args.get('token')
+    
+    if token != timer.edit_token:
+        abort(403)
+    
+    timer.event_name = request.form['event_name']
+    timer.end_date = datetime.fromisoformat(request.form['end_date'].replace('Z', '+00:00'))
+    timer.theme = request.form.get('theme', 'default')
+    timer.layout = request.form.get('layout', 'standard')
+    
+    db.session.commit()
+    return redirect(url_for('view_timer', timer_id=timer.id, token=token))
+
+@app.route('/timer/<timer_id>/delete', methods=['POST'])
+def delete_timer(timer_id):
+    timer = models.Timer.query.get_or_404(timer_id)
+    token = request.args.get('token')
+    
+    if token != timer.edit_token:
+        abort(403)
+    
+    db.session.delete(timer)
+    db.session.commit()
+    return '', 204
 
 @app.route('/manifest/<timer_id>')
 def manifest(timer_id):

@@ -9,3 +9,4 @@ class Timer(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     theme = db.Column(db.String(50), default='default')
     layout = db.Column(db.String(50), default='standard')
+    edit_token = db.Column(db.String(36), default=lambda: str(uuid.uuid4()))
