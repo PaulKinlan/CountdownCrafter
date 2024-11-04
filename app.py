@@ -21,7 +21,7 @@ db.init_app(app)
 
 with app.app_context():
     import models
-    db.drop_all()
+    # Only create tables if they don't exist
     db.create_all()
 
 @app.route('/')
