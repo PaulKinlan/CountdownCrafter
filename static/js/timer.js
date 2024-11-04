@@ -33,12 +33,44 @@ function initTimer(timerId) {
     setInterval(fetchTimerData, 1000);
 }
 
-function copyToClipboard() {
+async function copyToClipboard() {
     // Get the current URL and remove any token parameter
     const url = new URL(window.location.href);
     url.searchParams.delete('token');
+    const shareUrl = url.toString();
     
-    navigator.clipboard.writeText(url.toString()).then(() => {
-        alert('Timer URL copied to clipboard!');
-    });
+    // Get the event name from the page title
+    const eventName = document.querySelector('h1').textContent;
+    
+    // Check if Web Share API is available
+    if (navigator.share) {
+        try {
+            await navigator.share({
+                title: `Countdown Timer: ${eventName}`,
+                text: `Check out this countdown timer for ${eventName}!`,
+                url: shareUrl
+            });
+        } catch (err) {
+            // Fallback to clipboard if sharing was cancelled or failed
+            fallbackToClipboard(shareUrl);
+        }
+    } else {
+        // Fallback for browsers that don't support Web Share API
+        fallbackToClipboard(shareUrl);
+    }
+}
+
+function fallbackToClipboard(url) {
+    navigator.clipboard.writeText(url)
+        .then(() => {
+            const shareButton = document.querySelector('[onclick="copyToClipboard()"]');
+            const originalText = shareButton.textContent;
+            shareButton.textContent = 'Copied!';
+            setTimeout(() => {
+                shareButton.textContent = originalText;
+            }, 2000);
+        })
+        .catch(() => {
+            alert('Failed to copy URL to clipboard');
+        });
 }
