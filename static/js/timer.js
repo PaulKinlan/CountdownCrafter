@@ -34,8 +34,11 @@ function initTimer(timerId) {
 }
 
 function copyToClipboard() {
-    const url = window.location.href;
-    navigator.clipboard.writeText(url).then(() => {
+    // Get the current URL and remove any token parameter
+    const url = new URL(window.location.href);
+    url.searchParams.delete('token');
+    
+    navigator.clipboard.writeText(url.toString()).then(() => {
         alert('Timer URL copied to clipboard!');
     });
 }
