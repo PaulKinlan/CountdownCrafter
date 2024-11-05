@@ -10,26 +10,40 @@
     }
 }
 
+/* Make content take full viewport height */
+.container {
+    min-height: 100vh;
+    padding: 2rem 1rem;
+}
+
+.row {
+    min-height: calc(100vh - 4rem);
+}
+
 /* Timer Themes */
 .timer-container {
-    padding: 2rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 400px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 2rem;
+    z-index: 0;
 }
 
 .timer-content {
     position: relative;
     z-index: 2;
     width: 100%;
+    max-width: 800px;
     padding: 2rem;
+    margin: 0 auto;
     border-radius: 8px;
     background: rgba(33, 37, 41, 0.85);
     backdrop-filter: blur(10px);
@@ -77,26 +91,17 @@
 }
 
 /* Layout Variations */
-.standard {
+.standard .timer-content {
     max-width: 800px;
-    margin: 0 auto;
-}
-
-.compact {
-    max-width: 400px;
-    margin: 0 auto;
 }
 
 .compact .timer-content {
+    max-width: 400px;
     padding: 1rem;
 }
 
-.expanded {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
 .expanded .timer-content {
+    max-width: 1000px;
     padding: 3rem;
 }
 
@@ -107,5 +112,9 @@
 @media (max-width: 768px) {
     .expanded .display-4 {
         font-size: 2.5rem;
+    }
+    
+    .timer-content {
+        padding: 1.5rem;
     }
 }
