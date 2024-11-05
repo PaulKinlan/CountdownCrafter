@@ -15,27 +15,47 @@
     padding: 2rem;
     border-radius: 8px;
     transition: all 0.3s ease;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.timer-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 8px;
+    background: rgba(33, 37, 41, 0.85);
+    backdrop-filter: blur(10px);
 }
 
 /* Default Theme */
 .default {
-    background: var(--bs-dark);
+    color: var(--bs-light);
 }
 
 /* Neon Theme */
 .neon {
-    background: var(--bs-dark);
+    color: var(--bs-info);
+}
+
+.neon .timer-content {
     box-shadow: 0 0 20px var(--bs-info);
 }
 
 .neon .display-4 {
-    color: var(--bs-info);
     text-shadow: 0 0 10px var(--bs-info);
 }
 
 /* Minimal Theme */
-.minimal {
-    background: none;
+.minimal .timer-content {
+    background: rgba(33, 37, 41, 0.7);
 }
 
 .minimal .display-4 {
@@ -45,13 +65,15 @@
 
 /* Retro Theme */
 .retro {
-    background: var(--bs-dark);
+    color: var(--bs-warning);
+}
+
+.retro .timer-content {
     border: 2px solid var(--bs-warning);
 }
 
 .retro .display-4 {
     font-family: "Courier New", Courier, monospace;
-    color: var(--bs-warning);
 }
 
 /* Layout Variations */
@@ -63,12 +85,18 @@
 .compact {
     max-width: 400px;
     margin: 0 auto;
+}
+
+.compact .timer-content {
     padding: 1rem;
 }
 
 .expanded {
     max-width: 1000px;
     margin: 0 auto;
+}
+
+.expanded .timer-content {
     padding: 3rem;
 }
 
